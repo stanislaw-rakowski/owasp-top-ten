@@ -8,7 +8,9 @@ Enter frontend app folder:
 
 Create `.env` file at the root of directory and fill it with:
 
-`VITE_SERVER_URL=http://localhost:5000`
+```
+VITE_SERVER_URL=http://localhost:5000
+```
 
 Install the dependencies:
 
@@ -29,7 +31,6 @@ Enter backend app folder:
 Create `.env` file at the root of directory and fill it with:
 
 ```
-PRIVATE_KEY=
 MYSQLDATABASE=
 MYSQLHOST=
 MYSQLPASSWORD=
@@ -37,8 +38,6 @@ MYSQLPORT=
 MYSQLUSER=
 MYSQL_URL=
 ```
-
-Key `PRIVATE_KEY` must be filled with some random value, but the rest should stay empty
 
 Install the dependencies:
 

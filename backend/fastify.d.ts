@@ -5,9 +5,5 @@ declare module 'fastify' {
 	interface FastifyInstance {
 		config: Env
 		mysql: Pool
-		verifyBearerAuth: (request: FastifyRequest, reply: FastifyReply, done: (err?: Error) => void) => void
-	}
-	interface FastifyRequest {
-		auth: JwtPayload
 	}
 }

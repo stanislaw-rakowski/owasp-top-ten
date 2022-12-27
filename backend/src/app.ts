@@ -17,8 +17,6 @@ async function App(server: FastifyInstance, opts: AppOptions) {
 		dir: join(__dirname, 'routes'),
 		options: opts,
 	})
-
-	server.all('/', async (_, reply) => reply.redirect('/docs'))
 }
 
 export default App

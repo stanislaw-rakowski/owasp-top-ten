@@ -1,9 +1,7 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
 import { v4 as uuid } from 'uuid'
-import { sign } from 'jsonwebtoken'
 import { hashPassword, verifyPassword } from '../utils/hash'
 import { Account } from '../schemas/account'
-import getMockedData from '../utils/getMockedData'
 
 export const AccountController = (server: FastifyInstance) => ({
 	async createAccount(request: FastifyRequest<{ Body: Account }>, reply: FastifyReply) {
@@ -28,18 +26,17 @@ export const AccountController = (server: FastifyInstance) => ({
 
 			const { hash, salt } = hashPassword(password)
 
-			const organizationId = uuid()
+			const id = uuid()
 
 			await server.mysql.query(
-				`INSERT INTO Accounts (organizationId, email, password, salt) 
+				`INSERT INTO Accounts (id, email, password, salt) 
 				VALUES (?, ?, ?, ?)`,
-				[organizationId, email, hash, salt],
+				[id, email, hash, salt],
 			)
 
 			reply.status(201)
 
 			return {
-				organizationId,
 				password: hash,
 				email,
 			}
@@ -82,107 +79,17 @@ export const AccountController = (server: FastifyInstance) => ({
 				}
 			}
 
-			const token = sign(
-				{
-					organizationId: account.organizationId,
-					email: account.email,
-				},
-				server.config.PRIVATE_KEY,
-				{ expiresIn: '24h' },
-			)
-
 			reply.status(200)
 
 			return {
-				organizationId: account.organizationId,
+				id: account.id,
 				email: account.email,
-				token,
 			}
 		} catch (error) {
 			reply.status(500)
 
 			return {
 				message: 'Account login failed',
-				error,
-			}
-		}
-	},
-
-	async deleteAccount(request: FastifyRequest, reply: FastifyReply) {
-		try {
-			const organizationId = request.auth.organizationId
-
-			await server.mysql.query(
-				`DELETE FROM Accounts 
-				WHERE organizationId = ?`,
-				[organizationId],
-			)
-
-			reply.status(200)
-
-			return {
-				message: 'ok',
-			}
-		} catch (error) {
-			reply.status(500)
-
-			return {
-				message: 'Account deletion failed',
-				error,
-			}
-		}
-	},
-
-	async seedDatabase(request: FastifyRequest, reply: FastifyReply) {
-		try {
-			const organizationId = request.auth.organizationId
-
-			const { shelters, employees, animals } = getMockedData()
-
-			await server.mysql.query(`SET FOREIGN_KEY_CHECKS=0`)
-
-			await Promise.all(
-				shelters.map(({ id, name, published }) => {
-					server.mysql.query(
-						`INSERT INTO Shelters (shelterId, name, owner, published)
-						VALUES (?, ?, ?, ?)`,
-						[id, name, organizationId, published],
-					)
-				}),
-			)
-
-			await Promise.all(
-				employees.map(({ id, name, shelter }) => {
-					server.mysql.query(
-						`INSERT INTO Employees (id, name, shelter, organization)
-						VALUES (?, ?, ?, ?)`,
-						[id, name, shelter, organizationId],
-					)
-				}),
-			)
-
-			await Promise.all(
-				animals.map(({ id, name, birthDate, gender, species, description, shelter, employee }) => {
-					server.mysql.query(
-						`INSERT INTO Animals (id, name, birthDate, gender, species, description, shelter, employee, organization)
-						VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-						[id, name, birthDate, gender, species, description, shelter, employee, organizationId],
-					)
-				}),
-			)
-
-			await server.mysql.query(`SET FOREIGN_KEY_CHECKS=1`)
-
-			reply.status(200)
-
-			return {
-				message: 'ok',
-			}
-		} catch (error) {
-			reply.status(500)
-
-			return {
-				message: 'Database seed failed',
 				error,
 			}
 		}

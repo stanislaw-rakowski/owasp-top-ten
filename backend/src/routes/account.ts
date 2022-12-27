@@ -1,7 +1,6 @@
 import { FastifyInstance } from 'fastify'
 import { AccountController } from '../controllers/account'
 import { AccountRequestSchema, SignupResponseSchema, LoginResponseSchema } from '../schemas/account'
-import { MessageResponseSchema } from '../schemas/common'
 
 export const autoPrefix = '/account'
 
@@ -30,29 +29,5 @@ export default async function Account(server: FastifyInstance) {
 			},
 		},
 		handler: controller.loginIntoAccount,
-	})
-
-	server.route({
-		url: '/',
-		method: 'DELETE',
-		schema: {
-			response: {
-				200: MessageResponseSchema,
-			},
-		},
-		preHandler: server.verifyBearerAuth,
-		handler: controller.deleteAccount,
-	})
-
-	server.route({
-		url: '/seed',
-		method: 'GET',
-		schema: {
-			response: {
-				200: MessageResponseSchema,
-			},
-		},
-		preHandler: server.verifyBearerAuth,
-		handler: controller.seedDatabase,
 	})
 }

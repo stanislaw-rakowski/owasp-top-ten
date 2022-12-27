@@ -4,7 +4,7 @@ import cors, { FastifyCorsOptions } from '@fastify/cors'
 
 async function Cors(server: FastifyInstance) {
 	server.register<FastifyCorsOptions>(cors, {
-		origin: [/^http:\/\/localhost:/, 'https://piesek.netlify.app'],
+		origin: [/^http:\/\/localhost:/],
 	})
 }
 

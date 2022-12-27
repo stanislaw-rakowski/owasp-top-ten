@@ -2,7 +2,6 @@ import { Static, Type } from '@sinclair/typebox'
 
 export const EnvSchema = Type.Required(
 	Type.Object({
-		PRIVATE_KEY: Type.String(),
 		MYSQLDATABASE: Type.String(),
 		MYSQLHOST: Type.String(),
 		MYSQLPASSWORD: Type.String(),
