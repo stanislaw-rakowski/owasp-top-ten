@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import theme from './styles/theme'
 import GlobalStyles from './styles/GlobalStyles'
 import HomePage from './pages/HomePage'
+import BrokenAccessControl from './pages/BrokenAccessControl'
 
 const App = () => {
 	return (
@@ -10,6 +11,7 @@ const App = () => {
 			<GlobalStyles />
 			<Routes>
 				<Route path="/" element={<HomePage />} />
+				<Route path="/broken-access-control" element={<BrokenAccessControl />} />
 			</Routes>
 		</ThemeProvider>
 	)
