@@ -19,7 +19,7 @@ const GlobalStyles = createGlobalStyle<{ theme: Theme }>`
     }
     
     body {
-        font-family: 'Montserrat', sans-serif;
+        font-family: 'Roboto Mono', sans-serif;
         color: ${({ theme }) => theme.colors.primaryFontColor};
         margin: 0;
         padding: 0;

@@ -1,4 +1,4 @@
-# OWASP Top 5
+# OWASP Top Ten
 
 ## Frontend development
 
