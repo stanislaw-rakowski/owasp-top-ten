@@ -9,7 +9,7 @@ const Wrapper = styled.div`
 	align-items: center;
 	justify-content: center;
 	gap: 40px;
-	padding: 30px 20%;
+	padding: 30px;
 `
 
 export default Wrapper

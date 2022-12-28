@@ -8,6 +8,7 @@ import Heading from '../components/Heading'
 const Quote = styled.blockquote`
 	font-style: italic;
 	text-align: center;
+	max-width: 800px;
 `
 
 const HomePage = () => {
@@ -20,8 +21,8 @@ const HomePage = () => {
 				The OWASP Top 10 is a standard awareness document for developers and web application security. It represents a
 				broad consensus about the most critical security risks to web applications.
 			</Quote>
-			<Button onClick={() => navigate('/broken-access-control')}>
-				Rozpocznij <HiArrowNarrowRight />
+			<Button onClick={() => navigate('/broken-access-control?access=user')}>
+				Start <HiArrowNarrowRight />
 			</Button>
 		</Wrapper>
 	)
