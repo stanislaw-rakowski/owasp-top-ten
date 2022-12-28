@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 import { HiArrowNarrowRight } from 'react-icons/hi'
 import Wrapper from '../components/Wrapper'
 import Button from '../components/Button'
@@ -96,6 +96,7 @@ const employees = [
 const BrokenAccessControl = () => {
 	const [data, setData] = React.useState(employees)
 	const [params] = useSearchParams()
+	const navigate = useNavigate()
 	const access = params.get('access')
 
 	const handleDelete = (id: number) => {
@@ -144,7 +145,7 @@ const BrokenAccessControl = () => {
 					</ol>
 				</Content>
 			</Container>
-			<Button>
+			<Button onClick={() => navigate('/injection')}>
 				Next <HiArrowNarrowRight />
 			</Button>
 		</Wrapper>
