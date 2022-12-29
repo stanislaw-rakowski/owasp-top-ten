@@ -1,26 +1,26 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
 import { v4 as uuid } from 'uuid'
-import { hashPassword, verifyPassword } from '../utils/hash'
+import { hashPassword } from '../utils/hash'
 import { Account } from '../schemas/account'
 
 export const AccountController = (server: FastifyInstance) => ({
 	async createAccount(request: FastifyRequest<{ Body: Account }>, reply: FastifyReply) {
 		try {
-			const { email, password } = request.body
+			const { login, password } = request.body
 
 			const [accounts] = (await server.mysql.query(
 				`SELECT * 
 				FROM Accounts 
-				WHERE email = ?
+				WHERE login = ?
 			`,
-				[email],
+				[login],
 			)) as [Account[], unknown]
 
 			if (accounts.length > 0) {
 				reply.status(403)
 
 				return {
-					message: `Account with email ${email} is already registered`,
+					message: `Account with login ${login} is already registered`,
 				}
 			}
 
@@ -29,16 +29,16 @@ export const AccountController = (server: FastifyInstance) => ({
 			const id = uuid()
 
 			await server.mysql.query(
-				`INSERT INTO Accounts (id, email, password, salt) 
+				`INSERT INTO Accounts (id, login, password, salt) 
 				VALUES (?, ?, ?, ?)`,
-				[id, email, hash, salt],
+				[id, login, hash, salt],
 			)
 
 			reply.status(201)
 
 			return {
 				password: hash,
-				email,
+				login,
 			}
 		} catch (error) {
 			reply.status(500)
@@ -50,41 +50,33 @@ export const AccountController = (server: FastifyInstance) => ({
 		}
 	},
 
+	async createRandomUser(request: FastifyRequest, reply: FastifyReply) {
+		const getRandomNumber = () => Math.floor(Math.random() * 10000)
+
+		const id = uuid()
+		const login = `user-${getRandomNumber()}`
+		const password = `password-${getRandomNumber()}`
+
+		await server.mysql.query(
+			`INSERT INTO Accounts (id, login, password) 
+			VALUES (?, ?, ?)`,
+			[id, login, password],
+		)
+
+		reply.status(201)
+	},
+
 	async loginIntoAccount(request: FastifyRequest<{ Body: Account }>, reply: FastifyReply) {
 		try {
-			const { email, password } = request.body
+			const { login, password } = request.body
 
-			const [accounts] = (await server.mysql.query(
-				`SELECT * 
-				FROM Accounts 
-				WHERE email = ?`,
-				[email],
-			)) as [Account[], unknown]
-
-			if (accounts.length === 0) {
-				reply.status(404)
-
-				return {
-					message: `Account with email ${email} not found`,
-				}
-			}
-
-			const [account] = accounts
-
-			if (!verifyPassword(password, account.salt, account.password)) {
-				reply.status(403)
-
-				return {
-					message: 'Incorrect password',
-				}
-			}
+			const [accounts] = await server.mysql.query(
+				`SELECT * FROM Accounts WHERE login = "${login}" AND password = "${password}"`,
+			)
 
 			reply.status(200)
 
-			return {
-				id: account.id,
-				email: account.email,
-			}
+			return { accounts }
 		} catch (error) {
 			reply.status(500)
 

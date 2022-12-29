@@ -22,6 +22,6 @@ export const requestLogin = (data: AuthRequest) => {
 	return callApiEndpoint<AuthRequest, AuthData>('POST', `${baseUrl}/account/login`, data)
 }
 
-export const requestSignup = (data: AuthRequest) => {
-	return callApiEndpoint<AuthRequest, AuthData>('POST', `${baseUrl}/account/signup`, data)
+export const createRandomUser = () => {
+	return callApiEndpoint<never, never>('GET', `${baseUrl}/account/create_user`)
 }

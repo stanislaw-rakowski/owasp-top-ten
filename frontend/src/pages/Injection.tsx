@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { HiArrowNarrowRight } from 'react-icons/hi'
+import { requestLogin, createRandomUser } from '../lib/api'
+import { AuthData } from '../types'
 import Wrapper from '../components/Wrapper'
 import Button from '../components/Button'
 import Heading from '../components/Heading'
@@ -10,6 +12,7 @@ const Container = styled.div`
 	height: 80%;
 	display: flex;
 	gap: 20px;
+	position: relative;
 `
 
 const Instructions = styled.div`
@@ -56,6 +59,7 @@ const Form = styled.form`
 	padding: 40px;
 	width: 80%;
 	max-width: 400px;
+	margin-bottom: 20px;
 
 	button {
 		width: fit-content;
@@ -80,12 +84,35 @@ const Input = styled.input`
 	}
 `
 
+const GenerateButton = styled(Button)`
+	position: absolute;
+	top: 20px;
+	right: 20px;
+`
+
+const ResultContainer = styled.div`
+	height: 40%;
+	width: 90%;
+	background-color: ${({ theme }) => theme.colors.primaryBackground};
+	overflow-y: auto;
+	padding: 20px;
+	font-size: 1rem;
+	margin-bottom: 10px;
+`
+
+const Text = styled.p`
+	margin-top: auto;
+`
+
 const Injection = () => {
 	const [login, setLogin] = React.useState('')
 	const [password, setPassword] = React.useState('')
+	const [response, setResponse] = React.useState<AuthData | null>(null)
 
-	const handleFormSubmit = (event: React.FormEvent) => {
+	const handleFormSubmit = async (event: React.FormEvent) => {
 		event.preventDefault()
+
+		setResponse(await requestLogin({ login, password }))
 	}
 
 	return (
@@ -103,20 +130,38 @@ const Injection = () => {
 							usługi, a także całkowitego naruszenia bezpieczeństwa systemu. Podstawową przyczyną podatności na
 							wstrzykiwanie jest zwykle niewystarczająca weryfikacja danych wprowadzonych przez użytkownika.
 						</p>
-						<p>Znajdujesz się teraz na stronie z panelem logowania</p>
+						<p>
+							Znajdujesz się teraz na stronie z panelem logowania. Spróbuj zalogować się używając różnych danych. W
+							dolnej sekcji możesz obserwować surową odpowiedź z serwera.
+						</p>
+						<p>
+							W prawym górnym rogu znajduje się przycisk, którym możesz wygenerować i dodać do bazy nowych użytkowników.
+						</p>
+						<p>
+							Jeśli zapoznałeś się już z działaniem systemu logowania, spróbuj przeprowadzić atak SQL injection wpisując
+							w oba pola następującą wartość:
+						</p>
+						<code>" OR "1"="1</code>
+						<p>
+							Przez źle zabepieczoną obsługę zapytań do bazy danych udało Ci się wyciągnąć całą listę kont z hasłami
+							używając jednego prostego zapytania SQL.
+						</p>
 					</div>
 				</Instructions>
 				<Content>
 					<h2>Panel logowania</h2>
-					<Form>
+					<Form onSubmit={handleFormSubmit}>
 						<label>Login:</label>
 						<Input type="text" onChange={(event) => setLogin(event.target.value)} />
 						<label>Hasło:</label>
 						<Input type="password" onChange={(event) => setPassword(event.target.value)} />
-						<Button type="submit" onSubmit={handleFormSubmit}>
-							Zaloguj
-						</Button>
+						<Button type="submit">Zaloguj</Button>
 					</Form>
+					<GenerateButton onClick={createRandomUser}>Wygeneruj użytkownika</GenerateButton>
+					<Text>Odpowiedź serwera:</Text>
+					<ResultContainer>
+						<pre>{response && JSON.stringify(response, undefined, 2)}</pre>
+					</ResultContainer>
 				</Content>
 			</Container>
 			<Button>

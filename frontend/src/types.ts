@@ -1,7 +1,7 @@
 export type AuthData = {
-	organizationId: string
-	email: string
-	token: string
+	id: string
+	login: string
+	password: string
 }
 
 export type AuthStorage = AuthData & {
@@ -9,6 +9,6 @@ export type AuthStorage = AuthData & {
 }
 
 export type AuthRequest = {
-	email: string
+	login: string
 	password: string
 }
