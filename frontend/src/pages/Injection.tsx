@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
 import { HiArrowNarrowRight } from 'react-icons/hi'
 import { requestLogin, createRandomUser } from '../lib/api'
 import { AuthData } from '../types'
@@ -36,7 +37,7 @@ const Instructions = styled.div`
 
 	code {
 		font-size: 1.2rem;
-		color: gray;
+		color: lightgray;
 		padding-left: 40px;
 	}
 `
@@ -108,6 +109,7 @@ const Injection = () => {
 	const [login, setLogin] = React.useState('')
 	const [password, setPassword] = React.useState('')
 	const [response, setResponse] = React.useState<AuthData | null>(null)
+	const navigate = useNavigate()
 
 	const handleFormSubmit = async (event: React.FormEvent) => {
 		event.preventDefault()
@@ -164,7 +166,7 @@ const Injection = () => {
 					</ResultContainer>
 				</Content>
 			</Container>
-			<Button>
+			<Button onClick={() => navigate('/insecure-design')}>
 				Next <HiArrowNarrowRight />
 			</Button>
 		</Wrapper>

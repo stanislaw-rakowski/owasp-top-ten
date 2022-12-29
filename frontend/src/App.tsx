@@ -5,6 +5,7 @@ import GlobalStyles from './styles/GlobalStyles'
 import HomePage from './pages/HomePage'
 import BrokenAccessControl from './pages/BrokenAccessControl'
 import Injection from './pages/Injection'
+import InsecureDesign from './pages/InsecureDesign'
 
 const App = () => {
 	return (
@@ -14,6 +15,7 @@ const App = () => {
 				<Route path="/" element={<HomePage />} />
 				<Route path="/broken-access-control" element={<BrokenAccessControl />} />
 				<Route path="/injection" element={<Injection />} />
+				<Route path="/insecure-design" element={<InsecureDesign />} />
 			</Routes>
 		</ThemeProvider>
 	)

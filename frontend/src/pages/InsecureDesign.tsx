@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useSearchParams, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { HiArrowNarrowRight } from 'react-icons/hi'
 import Wrapper from '../components/Wrapper'
 import Button from '../components/Button'
@@ -37,6 +37,11 @@ const Instructions = styled.div`
 		color: lightgray;
 		padding-left: 40px;
 	}
+
+	p > code {
+		color: inherit;
+		padding: 0;
+	}
 `
 
 const Content = styled.div`
@@ -71,6 +76,7 @@ const DataRow = styled.li`
 		border: none;
 		color: inherit;
 		cursor: pointer;
+		visibility: hidden;
 	}
 `
 
@@ -93,11 +99,9 @@ const employees = [
 	},
 ]
 
-const BrokenAccessControl = () => {
+const InsecureDesign = () => {
 	const [data, setData] = React.useState(employees)
-	const [params] = useSearchParams()
 	const navigate = useNavigate()
-	const access = params.get('access')
 
 	const handleDelete = (id: number) => {
 		setData((current) => current.filter((employee) => employee.id !== id))
@@ -105,30 +109,45 @@ const BrokenAccessControl = () => {
 
 	return (
 		<Wrapper>
-			<Heading>Broken Access Control</Heading>
+			<Heading>Insecure Design</Heading>
 			<Container>
 				<Instructions>
 					<div>
 						<p>
-							Kontrola dostępu wymusza takie zasady, aby użytkownicy nie mogli działać poza określonymi uprawnieniami.
-							Błędnie obsłużona kontrola dostępu zwykle prowadzi do nieautoryzowanego ujawnienia informacji, modyfikacji
-							lub zniszczenia wszystkich danych lub wykonania operacji poza ograniczeniami użytkownika.
+							Niezabezpieczony design projektu pojawiaja się, gdy programiści, zespoły ds. kontroli jakości i/lub
+							bezpieczeństwa nie przewidzą i nie ocenią zagrożeń na etapie projektowania kodu. Podatności te są również
+							konsekwencją nieprzestrzegania najlepszych praktyk bezpieczeństwa podczas projektowania aplikacji. Bez
+							bezpiecznego designu projektu trudno jest wykryć i naprawić wady architektoniczne.
 						</p>
 						<p>
 							Znajdujesz się właśnie na stronie z panelem pracowników z danej firmy. Jesteś zalogowany jako zwykły
 							użytkownik i jedyną akcją jaką możesz wykonać to przeglądanie listy pracowników.
 						</p>
-						<p>Spójrz jednak na pasek adresu strony w przeglądarce. Możesz tam zauważyć pewien parametr w adresie:</p>
-						<code>?access=user</code>
 						<p>
-							Obsługa dostępu użytkowników wykonana w taki sposób może być objawem źle zaimplementowanej kontroli
-							dostępu.
+							Wiesz jednak, że gdybyś miał uprawnienia administratorskie byłbyś w stanie edytować lub usuwać pracowników
+							z listy.
 						</p>
-						<p>Spróbuj edytować aktualny adres i zmień wartość parametru access na wartość admin:</p>
-						<code>?access=admin</code>
-						<p>Jak możesz zauważyć, na liście przy każdym pracowniku pojawił się przycisk usuwania.</p>
 						<p>
-							Przez źle zaimplementowaną na stronie obsługę dostępu, jesteś w stanie wykonać szkodliwą akcję, czyli
+							Otwórz narzędzia deweloperskie przeglądarki, wybierz opcję celownika i zaznacz jeden z szarych
+							prostokątów, w których znajdują się dane pracowików.
+						</p>
+						<p>
+							Jak możesz zauważyć w strukturze drzewa html w narzędziach deweloperskich w badanym elemencie oprócz
+							numeru i danych imiennych, znajduje się również przycisk:
+						</p>
+						<code>{`<button class="delete-button">delete</button>`}</code>
+						<p>
+							Przycisk nie jest widoczny na stronie i nie można go użyć, ponieważ ma on nałożony styl CSS:{' '}
+							<code>visibility: hidden;</code>
+						</p>
+						<p>
+							Aby wyświetlić przyciski do usuwania na stronie, wejdź w zakładkę 'console' w narzędziach deweloperskich,
+							a następnie wklej tam poniższy kod i uruchom go klikając enter.
+						</p>
+						<code>{`document.querySelectorAll('.delete-button').forEach((el) => (el.style.visibility = 'visible'))`}</code>
+						<p>Jak możesz zauważyć na liście pracowników pojawiły się przyciski do usuwania pracowników.</p>
+						<p>
+							Przez zły design i źle zaprojektowane zarządzanie dostępem jesteś w stanie wykonać szkodliwą akcję, czyli
 							usunąć pracowników.
 						</p>
 					</div>
@@ -139,17 +158,19 @@ const BrokenAccessControl = () => {
 						{data.map(({ id, name }) => (
 							<DataRow key={id}>
 								{id}. {name}
-								{access === 'admin' && <button onClick={() => handleDelete(id)}>delete</button>}
+								<button className="delete-button" onClick={() => handleDelete(id)}>
+									delete
+								</button>
 							</DataRow>
 						))}
 					</ol>
 				</Content>
 			</Container>
-			<Button onClick={() => navigate('/injection')}>
+			<Button onClick={() => navigate('/')}>
 				Next <HiArrowNarrowRight />
 			</Button>
 		</Wrapper>
 	)
 }
 
-export default BrokenAccessControl
+export default InsecureDesign
