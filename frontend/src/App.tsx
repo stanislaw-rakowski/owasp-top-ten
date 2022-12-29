@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage'
 import BrokenAccessControl from './pages/BrokenAccessControl'
 import Injection from './pages/Injection'
 import InsecureDesign from './pages/InsecureDesign'
+import AuthenticationFailures from './pages/AuthenticationFailures'
 
 const App = () => {
 	return (
@@ -16,6 +17,7 @@ const App = () => {
 				<Route path="/broken-access-control" element={<BrokenAccessControl />} />
 				<Route path="/injection" element={<Injection />} />
 				<Route path="/insecure-design" element={<InsecureDesign />} />
+				<Route path="/authentication-failures" element={<AuthenticationFailures />} />
 			</Routes>
 		</ThemeProvider>
 	)

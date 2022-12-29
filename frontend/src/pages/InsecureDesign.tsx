@@ -166,7 +166,7 @@ const InsecureDesign = () => {
 					</ol>
 				</Content>
 			</Container>
-			<Button onClick={() => navigate('/')}>
+			<Button onClick={() => navigate('/authentication-failures')}>
 				Next <HiArrowNarrowRight />
 			</Button>
 		</Wrapper>
