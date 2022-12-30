@@ -4,10 +4,6 @@ export type AuthData = {
 	password: string
 }
 
-export type AuthStorage = AuthData & {
-	expires: number
-}
-
 export type AuthRequest = {
 	login: string
 	password: string
