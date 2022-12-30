@@ -11,14 +11,20 @@ const Button = styled.button`
 	background-color: ${({ theme }) => theme.colors.accentColor};
 	font-size: 1rem;
 	cursor: pointer;
-	transition: filter 200ms ease;
+	transition: all 200ms ease;
 
 	&:hover {
-		filter: brightness(0.8);
+		filter: brightness(0.9);
+		scale: 1.05;
+
+		svg {
+			transform: translateX(10px);
+		}
 	}
 
 	svg {
 		font-size: 1rem;
+		transition: transform 200ms ease;
 	}
 `
 
