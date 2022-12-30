@@ -108,10 +108,11 @@ const AuthenticationFailures = () => {
 				<Instructions>
 					<div>
 						<p>
-							Confirmation of the user's identity, authentication, and session management is critical to protect against
-							authentication-related attacks. There may be authentication weaknesses like if the application permits
-							automated attacks such as credential stuffing, where the attacker has a list of valid usernames and
-							passwords, or permits brute force or other automated attacks.
+							Potwierdzenie tożsamości użytkownika, poprawne uwierzytelnienie i zarządzanie sesją ma kluczowe znaczenie
+							dla ochrony przed atakami. Słabe punkty uwierzytelniania mogą występować, na przykład jeśli aplikacja
+							pozwala na zautomatyzowane ataki, takie jak credential stuffing, w przypadku których osoba atakująca ma
+							listę prawidłowych nazw użytkowników i haseł lub jeśli aplikacja zezwala na ataki typu brute force lub
+							inne zautomatyzowane ataki.
 						</p>
 						<p>Znajdujesz się teraz na stronie z panelem logowania. Spróbuj zalogować się używając różnych danych.</p>
 						<p>
@@ -119,11 +120,11 @@ const AuthenticationFailures = () => {
 							żadnego limitu prób logowań.
 						</p>
 						<p>
-							Aby powtierdzić wiarygodność logowań do systemu możesz oworzyć narzędzia deweloperskie przeglądarki i
+							Aby potwierdzić wiarygodność logowań do systemu możesz oworzyć narzędzia deweloperskie przeglądarki i
 							wejść zakładkę 'network' i obserwować tam wysyłane zapytania '/login' do serwera.
 						</p>
 						<p>
-							Brak zabepieczenia przed ilością logowań jest bardzo niebezpieczny i naraża na taki typu brute force w
+							Brak zabepieczenia przed ilością logowań jest bardzo niebezpieczny i naraża na ataki typu brute force w
 							celu uzyskania dostępu do konta.
 						</p>
 					</div>
@@ -140,7 +141,7 @@ const AuthenticationFailures = () => {
 					<Text>Ilość prób logowania: {requestCount}</Text>
 				</Content>
 			</Container>
-			<Button onClick={() => navigate('/')}>
+			<Button onClick={() => navigate('/cross-site-scripting?color=white')}>
 				Next <HiArrowNarrowRight />
 			</Button>
 		</Wrapper>

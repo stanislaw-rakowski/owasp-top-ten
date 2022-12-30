@@ -133,9 +133,12 @@ const Injection = () => {
 							wstrzykiwanie jest zwykle niewystarczająca weryfikacja danych wprowadzonych przez użytkownika.
 						</p>
 						<p>
-							Znajdujesz się teraz na stronie z panelem logowania. Spróbuj zalogować się używając różnych danych. W
-							dolnej sekcji możesz obserwować surową odpowiedź z serwera.
+							Znajdujesz się teraz na stronie z panelem logowania. Spróbuj zalogować się używając poniższych danych,
+							oraz jakiś danych nieprawdziwych.
 						</p>
+						<code>login: admin</code>
+						<code>hasło: admin</code>
+						<p>W dolnej sekcji możesz obserwować surową odpowiedź z serwera.</p>
 						<p>
 							W prawym górnym rogu znajduje się przycisk, którym możesz wygenerować i dodać do bazy nowych użytkowników.
 						</p>
@@ -144,6 +147,11 @@ const Injection = () => {
 							w oba pola następującą wartość:
 						</p>
 						<code>" OR "1"="1</code>
+						<p>
+							Pierwszy cudzysłów kończy wprowadzaną nazwę. Słowo 'OR' jest słowem kluczowym ze składni SQL i porównanie
+							jakiegoś wprowadzonego słowa z warunkiem jeden równe jeden, który jest zawsze prawdziwy, spowodowało
+							zaznaczenie wszystkich rzędów danych z bazy.
+						</p>
 						<p>
 							Przez źle zabepieczoną obsługę zapytań do bazy danych udało Ci się wyciągnąć całą listę kont z hasłami
 							używając jednego prostego zapytania SQL.

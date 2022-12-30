@@ -145,9 +145,13 @@ const InsecureDesign = () => {
 							a następnie wklej tam poniższy kod i uruchom go klikając enter.
 						</p>
 						<code>{`document.querySelectorAll('.delete-button').forEach((el) => (el.style.visibility = 'visible'))`}</code>
+						<p>
+							Kod namierza wszystkie elementy na stronie z klasą 'delete-button', oraz zmienia styl 'visibility' każdego
+							z nich.
+						</p>
 						<p>Jak możesz zauważyć na liście pracowników pojawiły się przyciski do usuwania pracowników.</p>
 						<p>
-							Przez zły design i źle zaprojektowane zarządzanie dostępem jesteś w stanie wykonać szkodliwą akcję, czyli
+							Przez zły design i źle zaprojektowane zarządzanie dostępem, jesteś w stanie wykonać szkodliwą akcję, czyli
 							usunąć pracowników.
 						</p>
 					</div>
