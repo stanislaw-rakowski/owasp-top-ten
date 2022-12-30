@@ -7,6 +7,8 @@ import BrokenAccessControl from './pages/BrokenAccessControl'
 import Injection from './pages/Injection'
 import InsecureDesign from './pages/InsecureDesign'
 import AuthenticationFailures from './pages/AuthenticationFailures'
+import CrossSiteScripting from './pages/CrossSiteScripting'
+import EndPage from './pages/EndPage'
 
 const App = () => {
 	return (
@@ -18,6 +20,8 @@ const App = () => {
 				<Route path="/injection" element={<Injection />} />
 				<Route path="/insecure-design" element={<InsecureDesign />} />
 				<Route path="/authentication-failures" element={<AuthenticationFailures />} />
+				<Route path="/cross-site-scripting" element={<CrossSiteScripting />} />
+				<Route path="/congratulations" element={<EndPage />} />
 			</Routes>
 		</ThemeProvider>
 	)
