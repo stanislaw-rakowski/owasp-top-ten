@@ -6,7 +6,7 @@ import Wrapper from '../components/Wrapper'
 import Button from '../components/Button'
 import Heading from '../components/Heading'
 
-const CONFETTI_ENTRY_TIMEOUT = 300
+const CONFETTI_ENTRY_TIMEOUT = 200
 const CONFETTI_EXIT_TIMEOUT = 700
 
 const confettiSetup = {

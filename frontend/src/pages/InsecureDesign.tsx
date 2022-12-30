@@ -5,99 +5,17 @@ import { HiArrowNarrowRight } from 'react-icons/hi'
 import Wrapper from '../components/Wrapper'
 import Button from '../components/Button'
 import Heading from '../components/Heading'
+import Content from '../components/Content'
+import Container from '../components/Container'
+import Instructions from '../components/Instructions'
+import DataRow from '../components/DataRow'
+import { employees } from '../lib/constants'
 
-const Container = styled.div`
-	width: 100%;
-	height: 80%;
-	display: flex;
-	gap: 20px;
-`
-
-const Instructions = styled.div`
-	height: 100%;
-	width: 50%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: flex-start;
-	padding: 25px;
-	text-align: justify;
-	font-size: 1.1rem;
-
-	div {
-		max-width: 700px;
-	}
-
-	p:first-of-type {
-		font-style: italic;
-	}
-
-	code {
-		font-size: 1.2rem;
-		color: lightgray;
-		padding-left: 40px;
-	}
-
-	p > code {
-		color: inherit;
-		padding: 0;
-	}
-`
-
-const Content = styled.div`
-	height: 100%;
-	width: 50%;
-	background-color: ${({ theme }) => theme.colors.secondaryBackground};
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: flex-start;
-	padding: 20px;
-
-	ol {
-		width: 80%;
-		max-width: 500px;
-		list-style: none;
-		padding: 0;
-	}
-`
-
-const DataRow = styled.li`
-	width: 100%;
-	margin: 10px;
-	font-size: 1.5rem;
-	background-color: gray;
-	padding: 20px;
-	display: flex;
-	justify-content: space-between;
-
+const StyledDataRow = styled(DataRow)`
 	button {
-		background-color: ${({ theme }) => theme.colors.accentColor};
-		border: none;
-		color: inherit;
-		cursor: pointer;
 		visibility: hidden;
 	}
 `
-
-const employees = [
-	{
-		id: 1,
-		name: 'Jim Halpert',
-	},
-	{
-		id: 2,
-		name: 'Micheal Scott',
-	},
-	{
-		id: 3,
-		name: 'Dwight Shrute',
-	},
-	{
-		id: 4,
-		name: 'Pam Beesly',
-	},
-]
 
 const InsecureDesign = () => {
 	const [data, setData] = React.useState(employees)
@@ -160,12 +78,12 @@ const InsecureDesign = () => {
 					<h2>Lista pracowników</h2>
 					<ol>
 						{data.map(({ id, name }) => (
-							<DataRow key={id}>
+							<StyledDataRow key={id}>
 								{id}. {name}
 								<button className="delete-button" onClick={() => handleDelete(id)}>
 									delete
 								</button>
-							</DataRow>
+							</StyledDataRow>
 						))}
 					</ol>
 				</Content>

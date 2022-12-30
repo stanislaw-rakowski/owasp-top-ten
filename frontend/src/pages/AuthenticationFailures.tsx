@@ -6,83 +6,11 @@ import { requestLogin } from '../lib/api'
 import Wrapper from '../components/Wrapper'
 import Button from '../components/Button'
 import Heading from '../components/Heading'
-
-const Container = styled.div`
-	width: 100%;
-	height: 80%;
-	display: flex;
-	gap: 20px;
-	position: relative;
-`
-
-const Instructions = styled.div`
-	height: 100%;
-	width: 50%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: flex-start;
-	padding: 25px;
-	text-align: justify;
-	font-size: 1.1rem;
-
-	div {
-		max-width: 700px;
-	}
-
-	p:first-of-type {
-		font-style: italic;
-	}
-
-	code {
-		font-size: 1.2rem;
-		color: lightgray;
-		padding-left: 40px;
-	}
-`
-
-const Content = styled.div`
-	height: 100%;
-	width: 50%;
-	background-color: ${({ theme }) => theme.colors.secondaryBackground};
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: flex-start;
-	padding: 20px;
-`
-
-const Form = styled.form`
-	background-color: gray;
-	display: flex;
-	flex-direction: column;
-	padding: 40px;
-	width: 80%;
-	max-width: 400px;
-	margin-bottom: 20px;
-
-	button {
-		width: fit-content;
-		align-self: center;
-		margin-top: 20px;
-	}
-`
-
-const Input = styled.input`
-	width: 100%;
-	height: 40px;
-	padding: 4px 8px;
-	border: none;
-	background-color: darkgray;
-	font-size: 16px;
-	color: inherit;
-	font-family: inherit;
-	margin: 10px 0 20px;
-
-	&:focus {
-		outline: 1px solid white;
-	}
-`
+import Content from '../components/Content'
+import Container from '../components/Container'
+import Instructions from '../components/Instructions'
+import Form from '../components/Form'
+import Input from '../components/Input'
 
 const Text = styled.p`
 	margin-top: auto;
