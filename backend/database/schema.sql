@@ -6,3 +6,5 @@ CREATE TABLE Accounts (
     PRIMARY KEY (id)
 );
 
+INSERT INTO Accounts (id, login, password) VALUES ('12345', 'admin', 'admin');
+
