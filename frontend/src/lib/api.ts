@@ -1,5 +1,5 @@
 import { fetcher } from './fetcher'
-import { AuthRequest, AuthData } from '../types'
+import { AuthRequest, AuthData, UserCreationResponse } from '../types'
 
 const baseUrl = import.meta.env.VITE_SERVER_URL
 
@@ -23,5 +23,5 @@ export const requestLogin = (data: AuthRequest) => {
 }
 
 export const createRandomUser = () => {
-	return callApiEndpoint<never, never>('GET', `${baseUrl}/account/create_user`)
+	return callApiEndpoint<never, UserCreationResponse>('GET', `${baseUrl}/account/create_user`)
 }

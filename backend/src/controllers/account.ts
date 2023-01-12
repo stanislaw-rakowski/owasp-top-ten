@@ -17,6 +17,11 @@ export const AccountController = (server: FastifyInstance) => ({
 		)
 
 		reply.status(201)
+
+		return {
+			message: 'User created successfully',
+			data: { id, login, password },
+		}
 	},
 
 	async loginIntoAccount(request: FastifyRequest<{ Body: Account }>, reply: FastifyReply) {

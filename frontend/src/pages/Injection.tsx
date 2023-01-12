@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import { HiArrowNarrowRight } from 'react-icons/hi'
 import { requestLogin, createRandomUser } from '../lib/api'
-import { AuthData } from '../types'
+import { AuthData, UserCreationResponse } from '../types'
 import Wrapper from '../components/Wrapper'
 import Button from '../components/Button'
 import Heading from '../components/Heading'
@@ -36,13 +36,17 @@ const Text = styled.p`
 const Injection = () => {
 	const [login, setLogin] = React.useState('')
 	const [password, setPassword] = React.useState('')
-	const [response, setResponse] = React.useState<AuthData | null>(null)
+	const [response, setResponse] = React.useState<AuthData | UserCreationResponse | null>(null)
 	const navigate = useNavigate()
 
 	const handleFormSubmit = async (event: React.FormEvent) => {
 		event.preventDefault()
 
 		setResponse(await requestLogin({ login, password }))
+	}
+
+	const handleCreateUser = async () => {
+		setResponse(await createRandomUser())
 	}
 
 	return (
@@ -95,7 +99,7 @@ const Injection = () => {
 						<Input type="password" onChange={(event) => setPassword(event.target.value)} />
 						<Button type="submit">Zaloguj</Button>
 					</Form>
-					<GenerateButton onClick={createRandomUser}>Wygeneruj użytkownika</GenerateButton>
+					<GenerateButton onClick={handleCreateUser}>Wygeneruj użytkownika</GenerateButton>
 					<Text>Odpowiedź serwera:</Text>
 					<ResultContainer>
 						<pre>{response && JSON.stringify(response, undefined, 2)}</pre>
