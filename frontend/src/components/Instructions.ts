@@ -13,6 +13,8 @@ const Instructions = styled.div`
 
 	div {
 		max-width: 700px;
+		overflow-y: auto;
+		padding-right: 5px;
 	}
 
 	p:first-of-type {
